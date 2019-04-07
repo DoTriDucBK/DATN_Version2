@@ -1,0 +1,64 @@
+div.signin-container{
+    width: 400px;
+    height: 520px;
+    margin: auto;
+    overflow: auto;
+    background: linear-gradient(to bottom, #FFF 1%, #98c5e1 98%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    box-sizing: border-box;
+    border-bottom: 1px solid #DFDFDF;
+    border-left: 1px solid #ECECEC;
+    border-radius: 8px;
+    border-right: 1px solid #ECECEC;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.04);
+}
+div.title-signin{
+    width: 100%;
+    height: 40px;
+    margin-top: 20px;
+}
+div.title-signin h1{
+    font-size: 30px;
+    color: #069d86;
+}
+div.part-signin{
+    width: 100%;
+    height: 60px;
+    margin-top: 10px;
+}
+div.title-part-signin{
+    width: 90%;
+    height: 25px;
+    margin-left: 10px;
+    text-align: left;
+}
+div.value-part-signin{
+    width: 100%;
+    height: 35px;
+}
+div.value-part-signin input{
+    width: 95%;
+    height: 35px;
+    /* border-radius: 3px; */
+    border: 1px solid #808080;
+  /* border: 1px solid #eee; */
+  border-radius: 5px;
+  transition: border-color .5s ease-out;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}
+div.btn-sigin1{
+    width: 100%;
+    height: 40px;
+    margin-top: 30px;
+}
+button.btn-signin1{
+    width: 200px;
+    height: 40px;
+    background: linear-gradient(to right, #0f959b, #064a50);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+}
+button.btn-signin1:hover{
+    background-color: linear-gradient(to right, #064a50, #0f959b);
+}
