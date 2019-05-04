@@ -1,0 +1,59 @@
+div.info-user-container{
+    width: 450px;
+    height: 275px;
+    margin: auto;
+    margin-top: 100px;
+    border-radius: 5px;
+    box-shadow: 0 0px 10px 0 rgba(31, 28, 38, 0.35); 
+    background-color: #EEEEEE;
+    overflow: auto;
+}
+div.contai-title{
+    width: 100%;
+    height: 50px;
+}
+div.title-info-user{
+    width: 95%;
+    height: 43px;
+    margin-top: 7px;
+    float: left;
+}
+h1.title-info-user{
+    color:#069D86;
+    text-align: center;
+    font-size: 35px;
+}
+div.cancel-info{
+    width: 5%;
+    height: 50%;
+    float: left;
+    border-radius: 50%;
+    background-color: red;
+}
+label.cancel-x{
+    font-size: 18px;
+    color: white;
+    margin-left: 5px;
+    font-weight: bold;
+}
+div.info-user-item1{
+    width: 85%;
+    height: 30px;
+    margin: auto;
+    margin-top: 10px;
+}
+label.value-info-text{
+    font-weight: bold;
+    font-size: 18px;
+}
+div.value-point{
+    width: 85%;
+    height: 60px;
+    margin: auto;
+    margin-top: 10px;
+}
+label.value-point-text{
+    color:#069D86;
+    font-size: 35px;
+    font-weight: bolder;
+}
