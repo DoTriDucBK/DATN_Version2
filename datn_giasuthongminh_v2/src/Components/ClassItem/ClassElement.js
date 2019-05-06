@@ -11,34 +11,38 @@ import TutorAPI from '../../API/TutorAPI';
 import ClassUserAPI from '../../API/ClassUserAPI';
 import { reactLocalStorage } from "reactjs-localstorage";
 import { Redirect } from 'react-router-dom';
+import UserApi from '../../API/UserAPI';
+import { Modal, ModalBody } from 'reactstrap';
+import '../css/ModalCustome.css';
+import InfoMoney from '../Nav/InfoMoney';
 class ClassElement extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            status: "",
             open: false,
             idTutor: 0,
             tutor: [],
             idUser: reactLocalStorage.getObject("user.info").idUser,
             idClass: this.props.idClass,
-            redirectManageInvitation: false
+            redirectManageInvitation: false,
+            user: [],
+            modalInfoMoney: false,
         }
+        this.toggleInfoMoney = this.toggleInfoMoney.bind(this);
+    }
+    toggleInfoMoney() {
+        this.setState(prevState => ({
+            modalInfoMoney: !prevState.modalInfoMoney
+        }));
     }
     async componentDidMount() {
-        var s = parseInt(this.props.status);
-        if (s === 0) {
-            this.setState({ status: "Còn lớp" })
-        } else if (s === 1) {
-            this.setState({ status: "Hết lớp" })
-        } else if (s === 2) {
-            this.setState({ status: "Đang yêu cầu" })
-        }
         var listTutor = await TutorAPI.getTutorById(parseInt(this.props.idTutor));
-
+        var user = await UserApi.getUserByIdUser(parseInt(reactLocalStorage.getObject("user.info").idUser));
         console.log(listTutor)
         this.setState({
             idTutor: this.props.idTutor,
             tutor: listTutor,
+            user: user.data
         })
 
 
@@ -52,8 +56,8 @@ class ClassElement extends Component {
             idTutor: this.state.idTutor,
             idClass: this.state.idClass,
             status: 2,
-            notification:0,
-            is_seen:0
+            notification: 0,
+            is_seen: 0
         }
         // console.log("1111111111  " , data);
         var classUser = ClassUserAPI.createClassUser(data).then(result => {
@@ -70,21 +74,23 @@ class ClassElement extends Component {
         });
     }
     onClickOfferTutor = () => {
+        if (this.state.user[0].point < 20) {
+            this.toggleInfoMoney()
+        } else {
+            this.setState({
 
-        this.setState({
-
-            open: true
-        })
-
+                open: true
+            })
+        }
     }
     render() {
         console.log(this.state.tutor)
         const { tutor, redirectManageInvitation } = this.state;
         if (redirectManageInvitation) {
             return <Redirect to={{
-                pathname:"/manage-invitation",
-                state:{
-                    idUser:[this.state.idUser]
+                pathname: "/manage-invitation",
+                state: {
+                    idUser: [this.state.idUser]
                 }
             }}>
 
@@ -125,7 +131,9 @@ class ClassElement extends Component {
                 </div>
                 <div className="class-offer">
                     <div className="fee-offer">
-                        <div className="status-offer"><label className="status-offer">{this.state.status}</label></div>
+                        {this.props.status == "Chưa nhận lớp" ?
+                        <div className="status-offer"><label className="status-offer">{this.props.status}</label></div>:
+                        <div className="status-offer2"><label className="status-offer2">{this.props.status}</label></div>}
                     </div>
                     <div className="button-offer">
                         <button className="button-offer" onClick={this.onClickOfferTutor}>Mời dạy</button>
@@ -176,6 +184,13 @@ class ClassElement extends Component {
             </Button>
                     </DialogActions>
                 </Dialog>
+                <Modal isOpen={this.state.modalInfoMoney} toggle={this.toggleInfoMoney} className={this.props.className}>
+
+                    <ModalBody>
+                        <InfoMoney />
+                    </ModalBody>
+
+                </Modal>
             </div>
         );
     }

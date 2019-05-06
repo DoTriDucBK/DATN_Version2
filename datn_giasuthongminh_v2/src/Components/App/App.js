@@ -27,6 +27,8 @@ import InfoTutor from '../TutorProfile/InfoTutor';
 import ManageInvite from '../ManageInvite/ManageInvite';
 import ManageOffer from '../ManageInvite/ManageOffer';
 import Personal from '../PersonalPage/Personal';
+import MyService from '../../utils/Service';
+
 class App extends Component {
 	constructor(props) {
 		super(props)
@@ -34,6 +36,9 @@ class App extends Component {
 			indexHome: 0,
 			
 		})
+	
+	}
+	componentDidMount(){
 	
 	}
 	render() {

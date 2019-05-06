@@ -44,6 +44,7 @@ class ManageOffer extends Component {
                 <ClassOffer description={item.classInfo[0].description}
                 idClassTutor={item.idClass_Tutor}
                 idClass = {item.idClass}
+                idTutor = {item.tutor[0].idTutor}
                     detailClass={item.classInfo[0].detailClass}
                     nameSubject={item.classInfo[0].nameSubject}
                     city={item.classInfo[0].nameCity}

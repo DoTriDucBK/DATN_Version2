@@ -1,0 +1,46 @@
+div.info-money-contai{
+    width: 450px;
+    height: 275px;
+    margin: auto;
+    margin-top: 100px;
+    border-radius: 5px;
+    box-shadow: 0 0px 10px 0 rgba(31, 28, 38, 0.35); 
+    background-color: #cfd3d2;
+    overflow: auto;
+}
+div.title-warning{
+    width: 95%;
+    height: 100px;
+    margin: auto;
+}
+div.title-warning-img{
+    width: 17%;
+    height: 100%;
+    float: left;
+}
+label.title-warning-img{
+    font-size: 70px;
+    color: #F3B417;
+}
+div.title-warning-text{
+    width: 83%;
+    height: 50%;
+    float: left;
+    margin-top: 35px;
+}
+h1.title-warning-text{
+    font-size: 30px;
+    color: #069D86;
+}
+div.value-warning{
+    width: 87%;
+    height: 100px;
+    margin: auto;
+    margin-top: 10px;
+}
+p.value-warning{
+    font-size: 24px;
+    color: black;
+    margin-left: 5px;
+    font-weight: bold;
+}

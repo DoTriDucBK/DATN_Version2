@@ -14,6 +14,7 @@ import ClassUserAPI from '../../API/ClassUserAPI';
 import ClassTutorAPI from '../../API/ClassTutorAPI';
 import UserShareClassAPI from '../../API/UserShareClassAPI';
 import InfoUser from '../Nav/InfoUser';
+import MyService from '../../utils/Service';
 class Nav extends Component {
     constructor(props) {
         super(props);
@@ -184,6 +185,9 @@ class Nav extends Component {
         console.log(this.state.listShare.length)
         return parseInt(a) + parseInt(b);
     }
+    handleNotify = async () =>{
+        await MyService.postNotification()
+    }
     render() {
         var user_name = this.state.userinfo ? this.state.userinfo.userName : "";
         console.log(reactLocalStorage.getObject("home.is_login"));
@@ -204,7 +208,7 @@ class Nav extends Component {
             <div>
                 <nav className="navbar navbar-expand-lg navbar-light nav-header">
                     <a className="navbar-brand brand-custom" href="#">
-                        <div
+                        <div onClick ={this.handleNotify}
                             className="d-inline-block align-top image-logo" alt="" />
                         {/* <label className="nameLogo">Gia sư BK</label> */}
                     </a>

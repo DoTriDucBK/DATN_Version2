@@ -8,14 +8,23 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import ClassUserAPI from '../../API/ClassUserAPI';
 import ClassInfoAPI from '../../API/ClassInfoAPI';
+import UserAPI from '../../API/UserAPI';
 import {Redirect} from 'react-router-dom';
+import { reactLocalStorage } from 'reactjs-localstorage';
 class ClassInvite extends Component {
     constructor(props){
         super(props);
         this.state={
             open:false,
-            redirectHome:false
+            redirectHome:false,
+            user:[]
         }
+    }
+    async componentDidMount(){
+        var user = await UserAPI.getUserByIdUser(reactLocalStorage.getObject("user.info").idUser);
+        this.setState({
+            user:user.data
+        })
     }
     handleClose = async () => {
         var data = {
@@ -61,6 +70,17 @@ class ClassInvite extends Component {
                 alert(result.message)
             }
         }).catch(err =>console.log(err));
+        var dataPoint = {
+            idUser:this.state.user[0].idUser,
+            point:this.state.user[0].point - this.props.fee
+        }
+        var userInfo = await UserAPI.editUser(dataPoint).then (result => {
+            if(result && result.code === "success"){
+                userInfo = result.data
+            }else if(result.code === "error"){
+                alert(result.message)
+            }
+        }).catch(err => console.log(err));
         this.setState({
             open:false,
             redirectHome:true

@@ -4,6 +4,9 @@ import { Redirect } from 'react-router';
 import ClassInfoApi from '../../API/ClassInfoAPI';
 import { reactLocalStorage } from 'reactjs-localstorage';
 import UserApi from '../../API/UserAPI';
+import { Modal, ModalBody } from 'reactstrap';
+import '../css/ModalCustome.css';
+import InfoMoney from '../Nav/InfoMoney';
 class OfferClass extends Component {
     constructor(props) {
         super(props);
@@ -25,8 +28,15 @@ class OfferClass extends Component {
             nameGrade: "",
             idPartHour:"",
             detailClass:"",
-            point: reactLocalStorage.getObject("user.info").point
+            point: reactLocalStorage.getObject("user.info").point,
+            modalInfoMoney:false,
         };
+        this.toggleInfoMoney = this.toggleInfoMoney.bind(this);
+    }
+    toggleInfoMoney() {
+        this.setState(prevState => ({
+            modalInfoMoney: !prevState.modalInfoMoney
+        }));
     }
     // Lấy dữ liệu thay đổi của text-input
     handleChangeInputTextForm = (e) => {
@@ -68,7 +78,9 @@ class OfferClass extends Component {
     }
     
     handleCreateClass = async (e) => {
-        // var {subject,address,nameGrade,addressDetail,sumSubject,} = this.state;
+        if(this.state.point < 100){
+            this.toggleInfoMoney()
+        }else{
         e.preventDefault();
                 var data = {
                     idUser:reactLocalStorage.getObject("user.info").idUser,
@@ -111,6 +123,7 @@ class OfferClass extends Component {
                 this.setState({
                     redirectListClass:true
                 });
+            }
     }
 
     render() {
@@ -360,6 +373,13 @@ class OfferClass extends Component {
                 <div className="btn-offer">
                     <button type="button" className="btn-offer" onClick={this.handleCreateClass}>Đăng tin </button>
                 </div>
+                <Modal isOpen={this.state.modalInfoMoney} toggle={this.toggleInfoMoney} className={this.props.className}>
+
+                    <ModalBody>
+                        <InfoMoney />
+                    </ModalBody>
+
+                </Modal>
             </div>
 
         );

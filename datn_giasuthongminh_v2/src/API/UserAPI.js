@@ -97,6 +97,10 @@ const UserApi = {
         let result = await MyService.getRequestData("/user/get-user-id", { "idUser": id });
         return result
     },
+    getUserByName: async (name) => {
+        let result = await MyService.getRequestData("/user/get-user-name", { "userName": name });
+        return result
+    },
     editUser: async ( data) =>{
         var user = null;
         await MyService.postRequestData("/user/edit-user",data)

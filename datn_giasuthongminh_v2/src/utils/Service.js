@@ -24,10 +24,10 @@ const MyService = {
                 return response.data;
             })
             .catch(
-                error =>{
+                error => {
                     // console.log("Đức");
                     console.log(error)
-                } 
+                }
             )
         return result;
     }
@@ -81,6 +81,33 @@ const MyService = {
             )
         return result;
     },
+    postNotification: async function (data) {
+        data = {
+            "notification": {
+                "title": "Firebase",
+                "body": "Firebase topic message",
+                "click_action": "http://localhost:3000/",
+                "icon": "http://localhost:3000/favicon.ico"
+            },
+            "to": "dphKWHnnmk0:APA91bFobxu94mibMgfeUxuTzq9DHHKC7Dq-_VUgCNGG7r0X46hpwQ79QaBf9MBr6X4YcC9w1HTXnx1wodeZM8gQrujsYguTWRC7mp1CVLHb08G20VFGMMaT5NbNMIRyvT5lX4Oa-Jgy"
+        }
+        var result = await axios.post("https://fcm.googleapis.com/fcm/send", data, {
+            headers: {
+                "Authorization": "key=AAAAn5lU7ZI:APA91bEL6ETwQWXqCegLIK7e0bC0aT4ZrIy1fNzd6PG1HYhcJLwPcWG4lAUOjn6qNV-lOyzHzOA8cRkZLW36KQ89wtMhsQrjgVIU5iSicRpdNbIEXQw_OohaEcCU1ps206XVN2joe7Vg",
+                'Content-Type': 'application/json'
+        
+            }
+        })
+            .then(response => {
+                console.log("aaaa")
+                return response;
+                
+            })
+            .catch(
+                error => console.log(error)
+            )
+        return result;
+    }
 }
 
 export default MyService;
