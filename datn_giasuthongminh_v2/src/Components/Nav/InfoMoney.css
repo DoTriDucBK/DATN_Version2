@@ -1,6 +1,6 @@
 div.info-money-contai{
-    width: 450px;
-    height: 275px;
+    width: 400px;
+    height: 225px;
     margin: auto;
     margin-top: 100px;
     border-radius: 5px;
@@ -10,7 +10,7 @@ div.info-money-contai{
 }
 div.title-warning{
     width: 95%;
-    height: 100px;
+    height: 70px;
     margin: auto;
 }
 div.title-warning-img{
@@ -19,17 +19,17 @@ div.title-warning-img{
     float: left;
 }
 label.title-warning-img{
-    font-size: 70px;
+    font-size: 40px;
     color: #F3B417;
 }
 div.title-warning-text{
     width: 83%;
     height: 50%;
     float: left;
-    margin-top: 35px;
+    margin-top: 15px;
 }
 h1.title-warning-text{
-    font-size: 30px;
+    font-size: 25px;
     color: #069D86;
 }
 div.value-warning{
@@ -39,7 +39,7 @@ div.value-warning{
     margin-top: 10px;
 }
 p.value-warning{
-    font-size: 24px;
+    font-size: 23px;
     color: black;
     margin-left: 5px;
     font-weight: bold;

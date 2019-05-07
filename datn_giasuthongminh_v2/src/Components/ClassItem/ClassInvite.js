@@ -11,15 +11,25 @@ import ClassInfoAPI from '../../API/ClassInfoAPI';
 import UserAPI from '../../API/UserAPI';
 import {Redirect} from 'react-router-dom';
 import { reactLocalStorage } from 'reactjs-localstorage';
+import InfoMoney from '../Nav/InfoMoney';
+import { Modal, ModalBody } from 'reactstrap';
+import '../css/ModalCustome.css';
 class ClassInvite extends Component {
     constructor(props){
         super(props);
         this.state={
             open:false,
             redirectHome:false,
-            user:[]
+            user:[],
+            modalInfoMoney:false
         }
-    }
+            this.toggleInfoMoney = this.toggleInfoMoney.bind(this);
+        }
+        toggleInfoMoney() {
+            this.setState(prevState => ({
+                modalInfoMoney: !prevState.modalInfoMoney
+            }));
+        }
     async componentDidMount(){
         var user = await UserAPI.getUserByIdUser(reactLocalStorage.getObject("user.info").idUser);
         this.setState({
@@ -49,7 +59,8 @@ class ClassInvite extends Component {
         var data1 = {
             idClass_User: this.props.idClassUser,
             notification:1,
-            is_seen:1
+            is_seen:1,
+            status:1
         }
         var classUser = await ClassUserAPI.editClassUser(data1).then(result => {
             if (result && result.code === "success") {
@@ -72,7 +83,7 @@ class ClassInvite extends Component {
         }).catch(err =>console.log(err));
         var dataPoint = {
             idUser:this.state.user[0].idUser,
-            point:this.state.user[0].point - this.props.fee
+            point:this.state.user[0].point - this.props.fee/1000
         }
         var userInfo = await UserAPI.editUser(dataPoint).then (result => {
             if(result && result.code === "success"){
@@ -87,9 +98,13 @@ class ClassInvite extends Component {
         })
     }
     onClickReply =() => {
+        if(this.state.user[0].point < this.props.fee/1000){
+            this.toggleInfoMoney();
+        }else{
         this.setState({
             open:true
         })
+    }
     }
     render() {
         if(this.state.redirectHome){
@@ -153,6 +168,13 @@ class ClassInvite extends Component {
             </Button>
                     </DialogActions>
                 </Dialog>
+                <Modal isOpen={this.state.modalInfoMoney} toggle={this.toggleInfoMoney} className={this.props.className}>
+
+                    <ModalBody>
+                        <InfoMoney />
+                    </ModalBody>
+
+                </Modal>
             </div>
         );
     }

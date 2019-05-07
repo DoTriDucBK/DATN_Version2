@@ -7,6 +7,8 @@ import StarRatings from 'react-star-ratings';
 import { Modal, ModalBody } from 'reactstrap';
 import '../css/ModalCustome.css';
 import InfoNotLogin from '../Nav/InfoNotLogin';
+import InfoMoney from '../Nav/InfoMoney';
+import UserApi from '../../API/UserAPI';
 class TutorItem extends Component {
     constructor(props) {
         super(props);
@@ -20,12 +22,27 @@ class TutorItem extends Component {
             idTutor: [this.props.idTutor],
             star:[this.props.star],
             modalErr1:false,
+            modalMoney:false,
+            user:[]
         }
         this.toggleErr1 = this.toggleErr1.bind(this);
+        this.toggleMoney = this.toggleMoney.bind(this);
+    }
+    async componentDidMount(){
+        if(reactLocalStorage.getObject("home.is_login")){
+        var user = await UserApi.getUserByIdUser(reactLocalStorage.getObject("user.info").idUser);
+        this.setState({
+            user:user.data
+        })}
     }
     toggleErr1() {
         this.setState(prevState => ({
             modalErr1: !prevState.modalErr1
+        }));
+    }
+    toggleMoney(){
+        this.setState(prevState => ({
+            modalMoney: !prevState.modalMoney
         }));
     }
     redirectPersonalPage = () => {
@@ -40,8 +57,10 @@ class TutorItem extends Component {
         });
     }
     redirectListClassUser = () => {
-        if(!reactLocalStorage.getObject("home.is_login")){
+        if(!(reactLocalStorage.getObject("home.is_login") && reactLocalStorage.get("type") !=1)){
             this.toggleErr1();
+        }else if(this.state.user[0].point < 20){
+            this.toggleMoney();
         }else{
         this.setState({
             redirectListClassUser: true
@@ -114,6 +133,13 @@ class TutorItem extends Component {
 
                     <ModalBody>
                         <InfoNotLogin />
+                    </ModalBody>
+
+                </Modal>
+                <Modal isOpen={this.state.modalMoney} toggle={this.toggleMoney} className={this.props.className}>
+
+                    <ModalBody>
+                        <InfoMoney />
                     </ModalBody>
 
                 </Modal>

@@ -73,7 +73,7 @@ class ClassOffer extends Component {
         }).catch(err =>console.log(err));
         var dataPoint = {
             idUser: this.state.user[0].idUser,
-            point: this.state.user[0].point - this.props.fee
+            point: parseInt(this.state.user[0].point) - parseInt(this.props.fee)/1000
         }
         var userInfo = await UserAPI.editUser(dataPoint).then(result => {
             if(result && result.code === "success"){

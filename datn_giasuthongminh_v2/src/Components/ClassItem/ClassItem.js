@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './ClassItem.css';
 import MyUtils from '../../utils/MyUtils';
-import {Redirect} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import TutorAPI from '../../API/TutorAPI';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -14,18 +14,36 @@ import ClassTutorAPI from '../../API/ClassTutorAPI';
 import { Modal, ModalBody } from 'reactstrap';
 import '../css/ModalCustome.css';
 import DetailClass from '../../Components/DetailClass/DetailClass'
+import { reactLocalStorage } from 'reactjs-localstorage';
+import UserAPI from '../../API/UserAPI';
+import InfoMoney from '../Nav/InfoMoney';
+import InfoNotLogin from '../Nav/InfoNotLogin';
 class ClassItem extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            redirectDetailClass:false,
-            nameTutor:this.props.nameTutor,
-            tutor:[],
-            open:false,
-            redirectManageOffer:false,
-            modal: false
+            redirectDetailClass: false,
+            tutor: [],
+            user: [],
+            open: false,
+            redirectManageOffer: false,
+            modal: false,
+            modalInfoMoney: false,
+            modalNotLogin:false
         }
         this.toggle = this.toggle.bind(this);
+        this.toggleInfoMoney = this.toggleInfoMoney.bind(this);
+        this.toggleNotLogin = this.toggleNotLogin.bind(this);
+    }
+    toggleInfoMoney() {
+        this.setState(prevState => ({
+            modalInfoMoney: !prevState.modalInfoMoney
+        }));
+    }
+    toggleNotLogin(){
+        this.setState(prevState => ({
+            modalNotLogin: !prevState.modalNotLogin
+        }))
     }
     toggle() {
         this.setState(prevState => ({
@@ -39,12 +57,12 @@ class ClassItem extends Component {
         var data = {
             idUser: this.props.idUser,
             idTutor: this.state.tutor[0].idTutor,
-            idClass:this.props.idClass,
-            status:2,
-            notification:0,
-            is_seen:0
+            idClass: this.props.idClass,
+            status: 2,
+            notification: 0,
+            is_seen: 0
         }
-        console.log("1111111111  " , data);
+        console.log("1111111111  ", data);
         var classTutor = ClassTutorAPI.createClassTutor(data).then(result => {
             if (result && result.code === "success") {
                 classTutor = result.data;
@@ -53,42 +71,61 @@ class ClassItem extends Component {
             }
         })
             .catch(err => console.log(err));
+        var dataPoint = {
+            idUser: reactLocalStorage.getObject("user.info").idUser,
+            point: this.state.user[0].point - 20
+        }
+        var userInfo = UserAPI.editUser(dataPoint).then(result => {
+            if (result && result.code === "success") {
+                userInfo = result.data;
+            } else if (result.code === "error") {
+                alert(result.message);
+            }
+        }).catch(err => console.log(err));
+        var dataClass = {
+            idClass: this.props.idClass,
+            status: "Đang yêu cầu"
+        }
+        var classInfo = ClassInfoAPI.editClassInfo(dataClass).then(result => {
+            if (result && result.code === "success") {
+                classInfo = result.data;
+            } else if (result.code === "error") {
+                alert(result.message);
+            }
+        }).catch(err => console.log(err));
         this.setState({
             open: false,
             redirectManageOffer: true
         });
     }
     onClickOfferTutor = () => {
-
-        this.setState({
-
-            open: true
-        })
-
+        if(!(reactLocalStorage.getObject("home.is_login") && reactLocalStorage.get("type") !=2)){
+            this.toggleNotLogin()
+        }else if (this.state.user[0].point < (this.props.fee / 1000) + 20) {
+            this.toggleInfoMoney()
+        }
+         else {
+            this.setState({
+                open: true
+            })
+        }
     }
-    async componentDidMount(){
-        // var s= parseInt(this.props.status);
-        // console.log(s)
-        // if( s === 0){
-        //     this.setState({status:"Chưa nhận lớp"})
-        // }
-        // else if(s === 1){
-        //     this.setState({status:"Hết lớp"})
-        // }else if (s === 2){
-        //     this.setState({status:"Đang yêu cầu"})
-        // }
-        let tutor = await TutorAPI.getTutorByName(this.state.nameTutor);
+    async componentDidMount() {
+        if(reactLocalStorage.getObject("home.is_login")){
+        let tutor = await TutorAPI.getTutorByName(reactLocalStorage.getObject("user.info").userName);
+        let user = await UserAPI.getUserByName(reactLocalStorage.getObject("user.info").userName);
         this.setState({
-            tutor: tutor.data
-        })
+            tutor: tutor.data,
+            user: user.data
+        })}
         console.log(this.state);
     }
     render() {
-        if(this.state.redirectManageOffer){
+        if (this.state.redirectManageOffer) {
             return <Redirect to={{
-                pathname:"/manage-class",
-                state:{
-                    idTutor:[this.state.tutor[0].idTutor]
+                pathname: "/manage-class",
+                state: {
+                    idTutor: [this.state.tutor[0].idTutor]
                 }
             }}>
 
@@ -112,7 +149,7 @@ class ClassItem extends Component {
                         </div>
                         <div className="info-class1 method">
                             <p className="info-class1"><label className="name-class"><i className="fas fa-briefcase"></i></label>&nbsp;&nbsp;{this.props.typeMethod}</p>
-                        </div> 
+                        </div>
                         <div className="info-class1">
                             <p className="info-class1"><label className="name-class"><i className="fas fa-map-marker-alt"></i></label>&nbsp;&nbsp;{this.props.city}</p>
                         </div>
@@ -123,19 +160,19 @@ class ClassItem extends Component {
                 </div>
                 <div className="class-fee">
                     <div className="value-fee"><b className="value-fee">{MyUtils.currencyFormat(this.props.fee)}đ</b></div>
-                    <div className="view-detail"><p className="view-detail"  onClick={this.toggle}><u><i>Xem chi tiết lớp</i></u></p></div>
+                    <div className="view-detail"><p className="view-detail" onClick={this.toggle}><u><i>Xem chi tiết lớp</i></u></p></div>
                 </div>
-                {this.props.status==="Chưa nhận lớp" ?
-                <div className="class-offer">
-                    <div className="fee-offer">
-                        <div className="status-offer"><label className="status-offer">{this.props.status}</label></div>
+                {this.props.status === "Chưa nhận lớp" ?
+                    <div className="class-offer">
+                        <div className="fee-offer">
+                            <div className="status-offer"><label className="status-offer">{this.props.status}</label></div>
+                        </div>
+                        <div className="button-offer">
+                            <button className="button-offer" onClick={this.onClickOfferTutor}>Đề nghị dạy</button>
+                        </div>
                     </div>
-                    <div className="button-offer">
-                        <button className="button-offer" onClick={this.onClickOfferTutor}>Đề nghị dạy</button>
-                    </div>
-                </div>
-                :<div className="class-offer"></div>}
-            
+                    : <div className="class-offer"></div>}
+
                 <Dialog
                     open={this.state.open}
                     onClose={this.handleClose}
@@ -144,34 +181,6 @@ class ClassItem extends Component {
                 >
                     <DialogTitle id="alert-dialog-title">{"Bạn có chắc chắn muốn dạy lớp?"}</DialogTitle>
                     <DialogContent id="alert-dialog-description">
-                        {/* <div className="tutor-offer-custom" >
-                            <div className="info-profile-tutor-custom">
-                                <div className="user-birthday">
-                                    <div className="user-dialog-custom">
-                                        <p><label className="dialog-text"><i className="fas fa-user"></i></label> &nbsp;</p>
-                                        {/* {this.state.tutor.data[0].nameTutor} */}
-
-                                    {/* </div>
-                                    <div className="birthday-dialog-custom">
-                                        <p><label className="dialog-text"><i className="fas fa-birthday-cake"></i></label>&nbsp;</p> */}
-                                        {/* {this.state.tutor.data[0].birthdayTutor} */}
-
-                                    {/* </div> */}
-                                {/* </div> */}
-                                {/* <div className="user-birthday"> */}
-                                    {/* <div className="user-dialog-custom"> */}
-                                        {/* <p><label className="dialog-text"><i className="fas fa-map-marker-alt"></i></label>&nbsp;</p> */}
-                                        {/* {this.state.tutor.data[0].nameCity} */}
-
-                                    {/* </div> */}
-                                    {/* <div className="birthday-dialog-custom"> */}
-                                        {/* <p><label className="dialog-text"><i className="fas fa-phone-square"></i></label>&nbsp;</p> */}
-                                        {/* {this.state.tutor.data[0].telTutor} */}
-
-                                    {/* </div> */}
-                                {/* </div> */}
-                            {/* </div> */}
-                        {/* </div>  */}
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleClose} color="primary">
@@ -185,7 +194,21 @@ class ClassItem extends Component {
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
 
                     <ModalBody>
-                        <DetailClass idClass={this.props.idClass}/>
+                        <DetailClass idClass={this.props.idClass} />
+                    </ModalBody>
+
+                </Modal>
+                <Modal isOpen={this.state.modalInfoMoney} toggle={this.toggleInfoMoney} className={this.props.className}>
+
+                    <ModalBody>
+                        <InfoMoney />
+                    </ModalBody>
+
+                </Modal>
+                <Modal isOpen={this.state.modalNotLogin} toggle={this.toggleNotLogin} className={this.props.className}>
+
+                    <ModalBody>
+                        <InfoNotLogin />
                     </ModalBody>
 
                 </Modal>

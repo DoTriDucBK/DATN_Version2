@@ -15,6 +15,7 @@ import UserApi from '../../API/UserAPI';
 import { Modal, ModalBody } from 'reactstrap';
 import '../css/ModalCustome.css';
 import InfoMoney from '../Nav/InfoMoney';
+import ClassInfoApi from '../../API/ClassInfoAPI';
 class ClassElement extends Component {
     constructor(props) {
         super(props);
@@ -68,6 +69,28 @@ class ClassElement extends Component {
             }
         })
             .catch(err => console.log(err));
+        var infoClass = {
+            idClass:this.state.idClass,
+            status:"Đang yêu cầu"
+        }
+        var classInfo = ClassInfoApi.editClassInfo(infoClass).then (result => {
+            if(result && result.code ==="success"){
+                classInfo = result.data
+            }else if(result.code === "error"){
+                alert(result.message)
+            }
+        }).catch(err => console.log(err));
+        var dataPoint = {
+            idUser:this.state.user[0].idUser,
+            point:this.state.user[0].point - 20
+        }
+        var userInfo = UserApi.editUser(dataPoint).then (result => {
+            if(result && result.code === "success"){
+                userInfo = result.data;
+            }else if(result.code ==="error"){
+                alert(result.message);
+            }
+        }).catch (err => console.log(err))
         this.setState({
             open: false,
             redirectManageInvitation: true
@@ -84,7 +107,6 @@ class ClassElement extends Component {
         }
     }
     render() {
-        console.log(this.state.tutor)
         const { tutor, redirectManageInvitation } = this.state;
         if (redirectManageInvitation) {
             return <Redirect to={{
@@ -130,14 +152,16 @@ class ClassElement extends Component {
                     <div className="value-fee"><b>{MyUtils.currencyFormat(this.props.fee)}</b>đ/1 buổi</div>
                 </div>
                 <div className="class-offer">
-                    <div className="fee-offer">
-                        {this.props.status == "Chưa nhận lớp" ?
-                        <div className="status-offer"><label className="status-offer">{this.props.status}</label></div>:
-                        <div className="status-offer2"><label className="status-offer2">{this.props.status}</label></div>}
+                <div className="fee-offer">
+                        {this.props.status === "Chưa nhận lớp" ? <div className="status-offer"><label className="status-offer">{this.props.status}</label></div>:
+                        (this.props.status ==="Đang yêu cầu"?
+                        <div className="status-offer1"><label className="status-offer1">{this.props.status}</label></div>:
+                        <div className="status-offer2"><label className="status-offer2">{this.props.status}</label></div>)}
                     </div>
+                    {this.props.status === "Chưa nhận lớp" ?
                     <div className="button-offer">
                         <button className="button-offer" onClick={this.onClickOfferTutor}>Mời dạy</button>
-                    </div>
+                    </div>:<div></div>}
                 </div>
                 <Dialog
                     open={this.state.open}

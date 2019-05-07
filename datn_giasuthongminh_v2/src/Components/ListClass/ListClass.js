@@ -124,8 +124,7 @@ class ListClass extends Component {
                 typeMethod={item.typeMethod}
                 numberDay={item.numberDay}
                 fee={item.fee} 
-                status={item.status}
-                nameTutor={this.state.nameTutor}/>
+                status={item.status}/>
         </div>
         });
         // Logic for displaying page numbers
