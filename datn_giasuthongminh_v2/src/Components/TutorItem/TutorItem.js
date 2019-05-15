@@ -85,7 +85,8 @@ class TutorItem extends Component {
             return <Redirect to={{
                 pathname: "/class-user",
                 state: {
-                    idTutor: [this.state.idTutor]
+                    idTutor: [this.state.idTutor],
+                    nameTutor:[this.state.nameTutor]
                 }
             }}>
 

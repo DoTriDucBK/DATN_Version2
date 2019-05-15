@@ -9,6 +9,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import { reactLocalStorage } from "reactjs-localstorage";
 import UserShareClassAPI from '../../API/UserShareClassAPI';
+import UserAPI from '../../API/UserAPI';
+import Service from '../../utils/Service';
 class DetailClass extends Component {
     constructor(props) {
         super(props);
@@ -19,7 +21,9 @@ class DetailClass extends Component {
             is_button: false,
             limitStudent: 0,
             numberStudent: 0,
-            open: false
+            open: false,
+            userOfClass:[],
+            user:[]
         }
     }
     async componentDidMount() {
@@ -39,7 +43,10 @@ class DetailClass extends Component {
                 limitStudent: 3
             })
         }
-        console.log(value.data[0].shareClass === "Có");
+        let userOfClassInfo = await UserAPI.getUserByIdUser(this.props.idUserOfClass);
+        this.setState({
+            userOfClass:userOfClassInfo.data
+        })
     }
     handleClose = () => {
         this.setState({ open: false });
@@ -52,7 +59,6 @@ class DetailClass extends Component {
             notification: 0,
             is_seen: 0
         }
-        console.log("1111111111  ", data);
         var classTutor = UserShareClassAPI.createClassUser(data).then(result => {
             if (result && result.code === "success") {
                 classTutor = result.data;
@@ -61,6 +67,11 @@ class DetailClass extends Component {
             }
         })
             .catch(err => console.log(err));
+            var dataFirebase = {
+                title:"Thông báo",
+                message:"Học viên "+reactLocalStorage.getObject("user.info").userName +" gửi yêu cầu đề nghị học ghép lớp có mã "+ this.state.idClass +" của bạn!"
+            }
+            var notify =  Service.postNotification(dataFirebase,this.state.userOfClass[0].tokenFirebase);
         this.setState({
             open: false,
             // redirectManageOffer: true

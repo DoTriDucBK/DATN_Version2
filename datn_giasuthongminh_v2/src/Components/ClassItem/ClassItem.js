@@ -18,6 +18,7 @@ import { reactLocalStorage } from 'reactjs-localstorage';
 import UserAPI from '../../API/UserAPI';
 import InfoMoney from '../Nav/InfoMoney';
 import InfoNotLogin from '../Nav/InfoNotLogin';
+import Service from '../../utils/Service';
 class ClassItem extends Component {
     constructor(props) {
         super(props);
@@ -29,7 +30,8 @@ class ClassItem extends Component {
             redirectManageOffer: false,
             modal: false,
             modalInfoMoney: false,
-            modalNotLogin:false
+            modalNotLogin:false,
+            userOfClass:[]
         }
         this.toggle = this.toggle.bind(this);
         this.toggleInfoMoney = this.toggleInfoMoney.bind(this);
@@ -93,6 +95,11 @@ class ClassItem extends Component {
                 alert(result.message);
             }
         }).catch(err => console.log(err));
+        var dataFirebase = {
+            title:"Thông báo",
+            message:"Gia sư "+this.state.tutor[0].nameTutor +" gửi yêu cầu đề nghị được dạy lớp có mã "+ this.props.idClass +" của bạn!"
+        }
+        var notify =  Service.postNotification(dataFirebase,this.state.userOfClass[0].tokenFirebase);
         this.setState({
             open: false,
             redirectManageOffer: true
@@ -114,11 +121,12 @@ class ClassItem extends Component {
         if(reactLocalStorage.getObject("home.is_login")){
         let tutor = await TutorAPI.getTutorByName(reactLocalStorage.getObject("user.info").userName);
         let user = await UserAPI.getUserByName(reactLocalStorage.getObject("user.info").userName);
+        let userOfClassInfo = await UserAPI.getUserByIdUser(this.props.idUser)
         this.setState({
             tutor: tutor.data,
-            user: user.data
+            user: user.data,
+            userOfClass:userOfClassInfo.data
         })}
-        console.log(this.state);
     }
     render() {
         if (this.state.redirectManageOffer) {
@@ -162,16 +170,24 @@ class ClassItem extends Component {
                     <div className="value-fee"><b className="value-fee">{MyUtils.currencyFormat(this.props.fee)}đ</b></div>
                     <div className="view-detail"><p className="view-detail" onClick={this.toggle}><u><i>Xem chi tiết lớp</i></u></p></div>
                 </div>
-                {this.props.status === "Chưa nhận lớp" ?
-                    <div className="class-offer">
-                        <div className="fee-offer">
-                            <div className="status-offer"><label className="status-offer">{this.props.status}</label></div>
-                        </div>
-                        <div className="button-offer">
-                            <button className="button-offer" onClick={this.onClickOfferTutor}>Đề nghị dạy</button>
-                        </div>
+                {this.props.status==="Chưa nhận lớp" ?
+                <div className="class-offer">
+                    <div className="fee-offer">
+                        <div className="status-offer"><label className="status-offer">{this.props.status}</label></div>
                     </div>
-                    : <div className="class-offer"></div>}
+                    <div className="button-offer">
+                        <button className="button-offer" onClick={this.onClickOfferTutor}>Đề nghị dạy</button>
+                    </div>
+                </div>
+                :(this.props.status === "Đã nhận lớp" ?<div className="class-offer">
+                    <div className="status-class-custom">
+                        <label className="status-class-custom">{this.props.status}</label>
+                    </div>
+                </div>:<div className="class-offer">
+                    <div className="status-class-custom2">
+                        <label className="status-class-custom">{this.props.status}</label>
+                    </div>
+                </div>)}
 
                 <Dialog
                     open={this.state.open}
@@ -194,7 +210,7 @@ class ClassItem extends Component {
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
 
                     <ModalBody>
-                        <DetailClass idClass={this.props.idClass} />
+                        <DetailClass idClass={this.props.idClass} idUserOfClass = {this.props.idUser} />
                     </ModalBody>
 
                 </Modal>

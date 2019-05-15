@@ -28,6 +28,7 @@ import ManageInvite from '../ManageInvite/ManageInvite';
 import ManageOffer from '../ManageInvite/ManageOffer';
 import Personal from '../PersonalPage/Personal';
 import MyService from '../../utils/Service';
+import ManageMoney from '../ManageMoney/ManageMoney';
 
 class App extends Component {
 	constructor(props) {
@@ -95,6 +96,7 @@ class App extends Component {
 						{/* Quản lý lời đề nghị của gia sư dạy lớp */}
 						<Route path="/manage-offer" component={ManageOffer}/>
 						<Route path="/personal" component={Personal}/>
+						<Route path="/manage-money" component={ManageMoney}/>
 					</main>
 					<Footer />
 				</div>

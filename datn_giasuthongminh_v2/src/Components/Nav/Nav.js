@@ -41,10 +41,6 @@ class Nav extends Component {
         this.toggleErr = this.toggleErr.bind(this);
         this.toggleInfoUser = this.toggleInfoUser.bind(this);
     }
-    // componentDidMount() {
-    //     this.setState({ is_login: false })
-    //     // reactLocalStorage.get("home.is_login")
-    // }
     toggle() {
         this.setState(prevState => ({
             modal: !prevState.modal
@@ -204,11 +200,12 @@ class Nav extends Component {
         //     var textSearch = this.state.textSearch;
         //     return <Redirect  to={"/searchTutor/" + textSearch + ""}/>
         // }
+        console.log(this.state.is_login)
         return (
             <div>
                 <nav className="navbar navbar-expand-lg navbar-light nav-header">
                     <a className="navbar-brand brand-custom" href="#">
-                        <div onClick ={this.handleNotify}
+                        <div 
                             className="d-inline-block align-top image-logo" alt="" />
                         {/* <label className="nameLogo">Gia sư BK</label> */}
                     </a>
@@ -276,6 +273,7 @@ class Nav extends Component {
                                                     <li className="dropdown-content-item"> <label><i className="fas fa-unlock-alt"></i>&nbsp;Đổi mật khẩu</label></li>
                                                     <li className="dropdown-content-item" onClick={this.handleLogout}> <label><i className="fas fa-sign-out-alt"></i>&nbsp;Đăng xuất</label></li>
                                                     <li className="dropdown-content-item" onClick={this.toggleInfoUser}> <label><i className="fas fa-unlock-alt"></i>&nbsp;Thông tin tài khoản</label></li>
+                                                    <li className="dropdown-content-item" ><Link to="/manage-money"><label><i className="fas fa-dollar-sign"></i>&nbsp;Nạp tiền đổi điểm</label></Link></li>
                                                 </ul>
 
                                             </div>

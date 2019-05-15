@@ -16,6 +16,7 @@ import { Modal, ModalBody } from 'reactstrap';
 import '../css/ModalCustome.css';
 import InfoMoney from '../Nav/InfoMoney';
 import ClassInfoApi from '../../API/ClassInfoAPI';
+import Service from '../../utils/Service';
 class ClassElement extends Component {
     constructor(props) {
         super(props);
@@ -28,6 +29,7 @@ class ClassElement extends Component {
             redirectManageInvitation: false,
             user: [],
             modalInfoMoney: false,
+            userTutor:[]
         }
         this.toggleInfoMoney = this.toggleInfoMoney.bind(this);
     }
@@ -39,16 +41,18 @@ class ClassElement extends Component {
     async componentDidMount() {
         var listTutor = await TutorAPI.getTutorById(parseInt(this.props.idTutor));
         var user = await UserApi.getUserByIdUser(parseInt(reactLocalStorage.getObject("user.info").idUser));
+        var userTutor = await UserApi.getUserByName(listTutor.data[0].nameTutor);
         console.log(listTutor)
         this.setState({
             idTutor: this.props.idTutor,
             tutor: listTutor,
-            user: user.data
+            user: user.data,
+            userTutor:userTutor.data
         })
 
 
     }
-    handleClose = () => {
+    handleClose = () => {   
         this.setState({ open: false });
     };
     handleYes = () => {
@@ -90,7 +94,12 @@ class ClassElement extends Component {
             }else if(result.code ==="error"){
                 alert(result.message);
             }
-        }).catch (err => console.log(err))
+        }).catch (err => console.log(err));
+        var dataFirebase = {
+            title:"Thông báo",
+            message:"Bạn được mời dạy lớp mã số "+this.state.idClass +" từ học viên "+ this.state.user[0].userName
+        }
+        var notify =  Service.postNotification(dataFirebase,this.state.userTutor[0].tokenFirebase);
         this.setState({
             open: false,
             redirectManageInvitation: true

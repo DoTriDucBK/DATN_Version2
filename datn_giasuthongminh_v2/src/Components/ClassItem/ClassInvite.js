@@ -14,6 +14,7 @@ import { reactLocalStorage } from 'reactjs-localstorage';
 import InfoMoney from '../Nav/InfoMoney';
 import { Modal, ModalBody } from 'reactstrap';
 import '../css/ModalCustome.css';
+import Service from '../../utils/Service';
 class ClassInvite extends Component {
     constructor(props){
         super(props);
@@ -21,7 +22,8 @@ class ClassInvite extends Component {
             open:false,
             redirectHome:false,
             user:[],
-            modalInfoMoney:false
+            modalInfoMoney:false,
+            userResponse:[]
         }
             this.toggleInfoMoney = this.toggleInfoMoney.bind(this);
         }
@@ -32,8 +34,10 @@ class ClassInvite extends Component {
         }
     async componentDidMount(){
         var user = await UserAPI.getUserByIdUser(reactLocalStorage.getObject("user.info").idUser);
+        var user2 = await UserAPI.getUserByName(this.props.userName);
         this.setState({
-            user:user.data
+            user:user.data,
+            userResponse:user2.data
         })
     }
     handleClose = async () => {
@@ -82,7 +86,7 @@ class ClassInvite extends Component {
             }
         }).catch(err =>console.log(err));
         var dataPoint = {
-            idUser:this.state.user[0].idUser,
+            idUser:this.state.user[0].idUser, 
             point:this.state.user[0].point - this.props.fee/1000
         }
         var userInfo = await UserAPI.editUser(dataPoint).then (result => {
@@ -92,6 +96,11 @@ class ClassInvite extends Component {
                 alert(result.message)
             }
         }).catch(err => console.log(err));
+        var dataFirebase = {
+            title:"Thông báo",
+            message:"Gia sư "+this.state.user[0].userName +" đồng ý dạy lớp mã số "+ this.props.idClass +" của bạn!"
+        }
+        var notify =  Service.postNotification(dataFirebase,this.state.userResponse[0].tokenFirebase);
         this.setState({
             open:false,
             redirectHome:true

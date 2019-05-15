@@ -10,6 +10,7 @@ class ManageClass extends Component {
         super(props);
         this.state = {
             idTutor: parseInt(this.props.location.state.idTutor),
+            nameTutor:this.props.location.state.nameTutor,
             listClass: [],
             idUser: reactLocalStorage.getObject("user.info").idUser,
             status:0,
@@ -39,7 +40,9 @@ class ManageClass extends Component {
                     numberDay={item.numberDay}
                     fee={item.fee}
                     status={item.status}
-                    idTutor={this.state.idTutor} />
+                    idTutor={this.state.idTutor}
+                    nameTutor={this.state.nameTutor}
+             />
             </div>
         );
         return listClass;
@@ -55,7 +58,8 @@ class ManageClass extends Component {
                     numberDay={item.classInfo[0].numberDay}
                     fee={item.classInfo[0].fee}
                     status={item.classInfo[0].status}
-                    idTutor={this.state.idTutor} />
+                    idTutor={this.state.idTutor}
+                    nameTutor={this.state.nameTutor} />
             </div>
         );
         return listClass;

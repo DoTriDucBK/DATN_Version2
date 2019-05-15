@@ -4,9 +4,8 @@ import './index.css';
 import App from './Components/App/App';
 import * as serviceWorker from './serviceWorker';
 import { initializeFirebase, askForPermissioToReceiveNotifications } from './push-notification';
-
 ReactDOM.render(
-    <App />,
+    <App />  ,
     document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

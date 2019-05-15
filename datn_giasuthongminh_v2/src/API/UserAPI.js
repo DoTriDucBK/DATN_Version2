@@ -111,6 +111,13 @@ const UserApi = {
             .catch(err => console.log(err));
         console.log(user)
         return user;
+    },
+    updateTokenFirebase: async (idUser,token) => {
+        var result ;
+        await MyService.putRequestData("/user/token-firebase", {idUser: idUser, tokenFirebase: token})
+            .then(data => result = data)
+            .catch(err => console.log(err))
+        return result;
     }
 }
 export default UserApi;

@@ -1,0 +1,307 @@
+div.manage-money-container{
+    width: 95%;
+    height: 900px;
+    margin: auto;
+    padding-top: 70px;
+    background-color: white;
+}
+div.manage-money-left{
+    width: 70%;
+    height: 100%;
+    float: left;
+    background-color: #EEEEEE;
+    box-sizing: border-box;
+    border-radius: 7px;
+    box-shadow: 0 0px 10px 0 rgba(31, 28, 38, 0.35); 
+}
+div.info-account-user{
+    width: 100%;
+    height: 220px;
+    margin-top: 20px;
+}
+div.title-info-account-user{
+    width: 100%;
+    height: 40px;
+}
+div.title-info-account-user-left{
+    width: 30%;
+    height: 100%;
+    float: left;
+    background-color: #069D86;
+}
+p.title-info-account-user-left{
+    font-size: 19px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+    line-height: 40px;
+}
+div.title-info-account-user-right{
+    width: 70%;
+    height: 100%;
+    float: left;
+    border-bottom: 1px solid #069D86;
+}
+div.value-info-account-user{
+    width: 95%;
+    height: 160px;
+    margin: auto;
+    background-color: white;
+    margin-top: 10px;
+}
+div.value-info-account-user-item{
+    width: 100%;
+    height: 40px;
+    background-color: white;
+}
+p.value-info-account-user-item{
+    font-size: 16px;
+    color: black;
+    text-align: left;
+    line-height: 40px;
+    margin-left: 10px;
+}
+div.give-money{
+    width: 100%;
+    height: 500px; 
+    margin-top: 10px;
+}
+div.title-give-money{
+    width: 100%;
+    height: 40px;
+}
+div.title-give-money-left{
+    width: 30%;
+    height: 100%;
+    background-color: #069D86;
+    float: left;
+}
+div.title-give-money-right{
+    width: 70%;
+    height: 100%;
+    float: left;
+    border-bottom: 1px solid #069D86;
+}
+div.value-give-money{
+    width: 95%;
+    height: 400px;
+    max-height: 700px;
+    margin: auto;
+    margin-top:10px;
+    background-color: white;
+    /* overflow: auto; */
+}
+div.step1-give-money{
+    width: 100%;
+    height: 40px;
+    margin-top: 10px;
+}
+div.step1-give-money-left{
+    width: 23%;
+    height: 100%;
+    float: left;
+    margin-left: 20px;
+}
+p.step1-give-money-left{
+    color: black;
+    font-size: 16px;
+    text-align: left;
+    line-height: 40px;
+}
+div.step1-give-money-right{
+    width: 70%;
+    height: 100%;
+    float: left;
+}
+input.input-give-money{
+    width: 100%;
+    height: 100%;
+    background: white;
+    color: #676767;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #676767;
+    padding-left: 10px;
+}
+div.step2-give-money{
+    width: 100%;
+    /* height: 480px; */
+    /* max-height: 500px; */
+    min-height: 90px;
+    /* max-height: 480px; */
+    margin-top: 10px;
+}
+div.title-step2-give-money{
+    width: 100%;
+    height: 30px;
+}
+p.title-step2-give-money{
+    font-size: 16px;
+    margin-left: 20px;
+    text-align: left;
+    color: black;
+    line-height: 30px;
+}
+div.value-step2-give-money{
+    width: 90%;
+    height: 60px;
+    margin: auto;
+}
+li.value1-give-money{
+    width: 55%;
+    height: 30px;
+    list-style: none;
+    color: black;
+    display: block;
+    position: relative;
+     float: left;
+    margin-left: 20%;
+}
+input.radio-give-money{
+    margin-top: 6px;
+    float: left;
+}
+label.radio-give-money{
+    margin-left: 5px;
+    float: left;
+}
+li.value1-give-money:hover label.radio-give-money{
+	color: #069D86;
+}
+input.radio-give-money:checked~label.radio-give-money{
+    color: #069D86;
+    font-weight: bold;
+}
+#radio1:checked > div.online-give-money{
+    display: inline;
+}
+div.button-give-money{
+    width: 100%;
+    height: 40px;
+    margin-top: 60px;
+}
+button.btn-give-money{
+    width: 20%;
+    height: 40px;
+    border-radius: 5px;
+    background-color: #069D86;
+    color: white;
+    border: 1px solid #676767;
+    font-size: 17px;
+    margin-top: 10px;
+}
+div.radio1{
+    width: 100%;
+    height: 30px;
+}
+div.online-give-money{
+    width: 100%;
+    height: 260px;
+    background-color: #F3F3F3;
+    overflow: auto;
+}
+div.online-give-money-1{
+    width: 100%;
+    height: 50px;
+    margin-top: 10px;
+}
+p.online-give-money{
+    color: blue;
+    text-align: left;
+    margin-left: 7px;
+    font-style: italic;
+}
+div.online-give-money-2{
+    width: 100%;
+    height: 25px;
+}
+p.online-give-money-2{
+    color: blue;
+    text-align: left;
+    margin-left: 7px;
+}
+div.info-online-give-money{
+    width: 80%;
+    height: 25px;
+    margin: auto;
+    background-color: #fcbf55;
+}
+div.offline-give-money{
+    width: 100%;
+    height: 80px;
+    background-color: #F3F3F3;
+}
+div.offline-give-money-value{
+    width: 100%;
+    height: 25px;
+}
+p.offline-give-money-value{
+    color: blue;
+    text-align: left;
+    margin-left:7px;
+}
+div.manage-money-right{
+    width: 29%;
+    height: 100%;
+    float: left;
+    background-color: #EEEEEE;
+    box-sizing: border-box;
+    border-radius: 7px;
+    box-shadow: 0 0px 10px 0 rgba(31, 28, 38, 0.35); 
+    margin-left: 1%;
+}
+div.rule-save-money{
+    width: 100%;
+    height: 35%;
+}
+div.rule-title{
+    width: 100%;
+    height: 40px;
+    margin-top: 20px;
+}
+h3.rule-title{
+    color: #069D86;
+}
+div.rule-value{
+    width: 90%;
+    height: 200px;
+    margin: auto;
+    margin-top: 10px;
+}
+div.rule-item{
+    width: 100%;
+    height: 35px;
+}
+p.rule-item{
+    color: black;
+    text-align: left;
+    margin-left:20px;
+}
+p.rule-item1{
+    color: black;
+    text-align: left;
+    margin-left:5px;
+}
+div.rule-website{
+    width: 100%;
+    height: 55%;
+}
+div.rule-website-title{
+    width: 100%;
+    height: 40px;
+}
+div.rule-item2{
+    width: 100%;
+    height: 55px;
+}
+div.rule-value2{
+    width: 95%;
+    height: 350px;
+    margin: auto;
+    margin-top: 10px;
+}
+div.dialog-userName{
+    width: 400px;
+    height: 25px;
+    background-color: #8998d3;
+}
