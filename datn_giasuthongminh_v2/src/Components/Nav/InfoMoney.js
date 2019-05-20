@@ -1,19 +1,25 @@
 import React, { Component } from 'react';
 import './InfoMoney.css';
 class InfoMoney extends Component {
+    toggle =()=> {
+        this.props.toggleInfoMoney();
+    }
     render() {
         return (
             <div className="info-money-contai">
                 <div className="title-warning">
-                    <div className="title-warning-img">
-                        <label className="title-warning-img"><i className="fas fa-exclamation-triangle"></i></label>
+                    <p className="title-dialog-warning">Tài khoản không đủ điểm</p>
+                </div>
+                <div className="value-dialog-warning">
+                    <div className="img-info-warning">
+                        <label className="img-info-warning"><i className="fas fa-exclamation-triangle"></i></label>
                     </div>
-                    <div className="title-warning-text">
-                        <h1 className="title-warning-text">Tài khoản không đủ điểm!</h1>
+                    <div className="value-info-warning">
+                        <p className="value-info-warning">Vui lòng nạp thẻ để có thêm điểm trước khi sử dụng!!!</p>
                     </div>
                 </div>
-                <div className="value-warning">
-                    <p className="value-warning">Vui lòng nạp thẻ để có thêm điểm trước khi sử dụng!!!</p>
+                <div className="btn-ok-warning">
+                    <button className="btn-ok-warning" onClick={this.toggle}>OK</button>
                 </div>
             </div>
         );

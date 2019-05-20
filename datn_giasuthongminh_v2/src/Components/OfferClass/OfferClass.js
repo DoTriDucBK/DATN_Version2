@@ -7,6 +7,7 @@ import UserApi from '../../API/UserAPI';
 import { Modal, ModalBody } from 'reactstrap';
 import '../css/ModalCustome.css';
 import InfoMoney from '../Nav/InfoMoney';
+import InfoMess from '../Nav/InfoMess';
 class OfferClass extends Component {
     constructor(props) {
         super(props);
@@ -30,12 +31,19 @@ class OfferClass extends Component {
             detailClass:"",
             point: reactLocalStorage.getObject("user.info").point,
             modalInfoMoney:false,
+            modalErr: false,
         };
+        this.toggleErr = this.toggleErr.bind(this);
         this.toggleInfoMoney = this.toggleInfoMoney.bind(this);
     }
     toggleInfoMoney() {
         this.setState(prevState => ({
             modalInfoMoney: !prevState.modalInfoMoney
+        }));
+    }
+    toggleErr() {
+        this.setState(prevState => ({
+            modalErr: !prevState.modalErr
         }));
     }
     // Lấy dữ liệu thay đổi của text-input
@@ -80,6 +88,8 @@ class OfferClass extends Component {
     handleCreateClass = async (e) => {
         if(this.state.point < 100){
             this.toggleInfoMoney()
+        }else if(this.state.sumSubject === "" || this.state.fee === "" || this.state.phone === "" || this.state.numberStudent === "" || this.state.addressDetail === "" || this.state.detailClass || this.state.idPartHour === "" || this.state.nameGrade ===""){
+            this.toggleErr();
         }else{
         e.preventDefault();
                 var data = {
@@ -376,7 +386,14 @@ class OfferClass extends Component {
                 <Modal isOpen={this.state.modalInfoMoney} toggle={this.toggleInfoMoney} className={this.props.className}>
 
                     <ModalBody>
-                        <InfoMoney />
+                        <InfoMoney toggleInfoMoney = {this.toggleInfoMoney}/>
+                    </ModalBody>
+
+                </Modal>
+                <Modal isOpen={this.state.modalErr} toggle={this.toggleErr} className={this.props.className}>
+
+                    <ModalBody>
+                        <InfoMess toggleSearch = {this.toggleErr}/>
                     </ModalBody>
 
                 </Modal>

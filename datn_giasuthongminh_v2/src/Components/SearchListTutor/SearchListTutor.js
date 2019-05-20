@@ -71,7 +71,8 @@ class SearchListTutor extends Component {
                 <TutorItem key={item.idTutor} name={item.nameTutor}
                      address={item.addressTutor} subject= {item.nameSubject}
                      fee={item.fee} detail={item.infoTutor}
-                     birthday={item.birthdayTutor} idTutor={item.idTutor}/>
+                     birthday={item.birthdayTutor} idTutor={item.idTutor}
+                     check={item.authentication}/>
             </div>
         );
         return listTutor;
@@ -112,7 +113,7 @@ class SearchListTutor extends Component {
 
         const renderTodos = currentTutor.map((item) => {
             return <div className="col col-md-3 row1" key={item.idTutor}>
-                <TutorItem key={item.idTutor} idTutor={item.idTutor} name={item.nameTutor} address={item.addressTutor} subject={item.nameSubject} fee={item.fee} detail={item.infoTutor} image={item.link_image} />
+                <TutorItem key={item.idTutor} idTutor={item.idTutor} name={item.nameTutor} address={item.addressTutor} subject={item.nameSubject} fee={item.fee} detail={item.infoTutor} image={item.link_image} check={item.authentication} />
             </div>;
         });
         // Logic for displaying page numbers

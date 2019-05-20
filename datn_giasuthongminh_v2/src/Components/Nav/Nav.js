@@ -28,9 +28,9 @@ class Nav extends Component {
             modal: false,
             modalSignin: false,
             modalErr: false,
-            userinfo: reactLocalStorage.getObject("user.info"),
-            is_login: reactLocalStorage.getObject("home.is_login"),
-            type: reactLocalStorage.get("type"),
+            // userinfo: reactLocalStorage.getObject("user.info"),
+            // is_login: reactLocalStorage.getObject("home.is_login"),
+            // type: reactLocalStorage.get("type"),
             redirectManageClassOffer: false,
             listInvite: [],
             listShare: [],
@@ -323,7 +323,7 @@ class Nav extends Component {
                 <Modal isOpen={this.state.modalErr} toggle={this.toggleErr} className={this.props.className}>
 
                     <ModalBody>
-                        <InfoMess />
+                        <InfoMess toggleSearch = {this.toggleErr}/>
                     </ModalBody>
 
                 </Modal>

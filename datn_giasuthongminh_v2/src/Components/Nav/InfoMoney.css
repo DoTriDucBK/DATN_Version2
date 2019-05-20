@@ -1,46 +1,70 @@
 div.info-money-contai{
-    width: 400px;
-    height: 225px;
-    margin: auto;
+    width: 450px;
+    height: 210px;
+    margin:auto;
     margin-top: 100px;
+    overflow: auto;
     border-radius: 5px;
     box-shadow: 0 0px 10px 0 rgba(31, 28, 38, 0.35); 
-    background-color: #cfd3d2;
-    overflow: auto;
+    background-color: #d1ccc9;
 }
 div.title-warning{
-    width: 95%;
+    width: 100%;
+    height: 40px;
+    background-color: #F3B417;
+}
+p.title-dialog-warning{
+    line-height: 40px;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+    text-align: left;
+    margin-left: 10px;
+}
+div.value-dialog-warning{
+    width: 90%;
     height: 70px;
     margin: auto;
+    margin-top: 20px;
 }
-div.title-warning-img{
-    width: 17%;
-    height: 100%;
+div.img-info-warning{
+    width: 18%;
+    height: 70px;
     float: left;
 }
-label.title-warning-img{
-    font-size: 40px;
+label.img-info-warning{
+    font-size: 60px;
     color: #F3B417;
+    text-align: center;
+    line-height: 70px;
 }
-div.title-warning-text{
-    width: 83%;
-    height: 50%;
+div.value-info-warning{
+    width: 82%;
+    height: 70px;
     float: left;
-    margin-top: 15px;
 }
-h1.title-warning-text{
-    font-size: 25px;
-    color: #069D86;
-}
-div.value-warning{
-    width: 87%;
-    height: 100px;
-    margin: auto;
+p.value-info-warning{
+    font-size: 22px;
+    color: black;
+    text-align: center;
     margin-top: 10px;
 }
-p.value-warning{
-    font-size: 23px;
-    color: black;
-    margin-left: 5px;
+div.btn-ok-warning{
+    width: 100%;
+    height: 30px;
+    margin-top: 25px;
+}
+button.btn-ok-warning{
+    width: 15%;
+    height: 100%;
+    float: right;
+    margin-right: 15px;
+    border: 1px solid #7C7C7C;
+}
+button.btn-ok-warning:hover{
+    background-color: #2F81D0;
+    border: 1px solid white;
+    transform: scale(1.05);
     font-weight: bold;
 }

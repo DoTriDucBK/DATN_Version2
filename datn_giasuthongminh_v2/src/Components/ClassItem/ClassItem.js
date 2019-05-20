@@ -217,7 +217,7 @@ class ClassItem extends Component {
                 <Modal isOpen={this.state.modalInfoMoney} toggle={this.toggleInfoMoney} className={this.props.className}>
 
                     <ModalBody>
-                        <InfoMoney />
+                        <InfoMoney toggleInfoMoney = {this.toggleInfoMoney} />
                     </ModalBody>
 
                 </Modal>

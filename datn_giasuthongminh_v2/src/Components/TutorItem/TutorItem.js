@@ -133,14 +133,14 @@ class TutorItem extends Component {
                 <Modal isOpen={this.state.modalErr1} toggle={this.toggleErr1} className={this.props.className}>
 
                     <ModalBody>
-                        <InfoNotLogin />
+                        <InfoNotLogin  toggleNotLogin = {this.toggleErr1}/>
                     </ModalBody>
 
                 </Modal>
                 <Modal isOpen={this.state.modalMoney} toggle={this.toggleMoney} className={this.props.className}>
 
                     <ModalBody>
-                        <InfoMoney />
+                        <InfoMoney toggleInfoMoney = {this.toggleMoney}/>
                     </ModalBody>
 
                 </Modal>
