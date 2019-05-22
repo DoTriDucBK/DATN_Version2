@@ -17,7 +17,8 @@ class ListClass extends Component {
             method:"",
             activePage: 1,
             classPerPage: 4,
-            modal: false
+            modal: false,
+            nameTutor:reactLocalStorage.getObject("user.info").userName
         }
         this.toggle = this.toggle.bind(this);
     }
@@ -59,21 +60,6 @@ class ListClass extends Component {
             [e.target.name] : e.target.value
         });
     }
-    // showClassInfo = () => {
-    //     const listClass = this.state.classInfo.map((item, index) =>
-    //         <div className="result-item-class" key={index}>
-    //             <ClassItem description={item.description}
-    //                 detailClass={item.detailClass}
-    //                 nameSubject={item.nameSubject}
-    //                 city={item.nameCity}
-    //                 typeMethod={item.typeMethod}
-    //                 numberDay={item.numberDay}
-    //                 fee={item.fee}
-    //                 status={item.status} />
-    //         </div>
-    //     );
-    //     return listClass;
-    // }
     searchClass = async () => {
         if(this.state.methodTeaching==="Online"){
             this.setState({typeMethod:"Online"})
@@ -88,8 +74,6 @@ class ListClass extends Component {
             typeMethod:this.state.method,
             status:this.state.status,
             shareClass:this.state.doubleClass
-            // jobTutor:this.state.jobTutor
-
         }
 
         var list = await ClassInfoAPI.searchClass(options).then(
@@ -124,7 +108,8 @@ class ListClass extends Component {
                 typeMethod={item.typeMethod}
                 numberDay={item.numberDay}
                 fee={item.fee} 
-                status={item.status}/>
+                status={item.status}
+                nameTutor={this.state.nameTutor}/>
         </div>
         });
         // Logic for displaying page numbers

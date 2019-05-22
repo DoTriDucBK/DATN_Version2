@@ -105,15 +105,17 @@ class ClassItem extends Component {
             redirectManageOffer: true
         });
     }
-    onClickOfferTutor = () => {
+    onClickOfferTutor = async() => {
         if(!(reactLocalStorage.getObject("home.is_login") && reactLocalStorage.get("type") !=2)){
             this.toggleNotLogin()
         }else if (this.state.user[0].point < (this.props.fee / 1000) + 20) {
             this.toggleInfoMoney()
         }
          else {
+            let userOfClassInfo = await UserAPI.getUserByIdUser(this.props.idUser)
             this.setState({
-                open: true
+                open: true,
+                userOfClass:userOfClassInfo.data
             })
         }
     }
@@ -121,11 +123,11 @@ class ClassItem extends Component {
         if(reactLocalStorage.getObject("home.is_login")){
         let tutor = await TutorAPI.getTutorByName(reactLocalStorage.getObject("user.info").userName);
         let user = await UserAPI.getUserByName(reactLocalStorage.getObject("user.info").userName);
-        let userOfClassInfo = await UserAPI.getUserByIdUser(this.props.idUser)
+        
         this.setState({
             tutor: tutor.data,
             user: user.data,
-            userOfClass:userOfClassInfo.data
+            
         })}
     }
     render() {
@@ -210,7 +212,7 @@ class ClassItem extends Component {
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
 
                     <ModalBody>
-                        <DetailClass idClass={this.props.idClass} idUserOfClass = {this.props.idUser} />
+                        <DetailClass idClass={this.props.idClass} idUserOfClass = {this.props.idUser} toggleDetail = {this.toggle}/>
                     </ModalBody>
 
                 </Modal>
@@ -224,7 +226,7 @@ class ClassItem extends Component {
                 <Modal isOpen={this.state.modalNotLogin} toggle={this.toggleNotLogin} className={this.props.className}>
 
                     <ModalBody>
-                        <InfoNotLogin />
+                        <InfoNotLogin toggleNotLogin={this.toggleNotLogin}/>
                     </ModalBody>
 
                 </Modal>

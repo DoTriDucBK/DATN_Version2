@@ -15,6 +15,7 @@ import ClassTutorAPI from '../../API/ClassTutorAPI';
 import UserShareClassAPI from '../../API/UserShareClassAPI';
 import InfoUser from '../Nav/InfoUser';
 import MyService from '../../utils/Service';
+import ChangePassword from '../ChangePassword/ChangePassword';
 class Nav extends Component {
     constructor(props) {
         super(props);
@@ -28,9 +29,10 @@ class Nav extends Component {
             modal: false,
             modalSignin: false,
             modalErr: false,
-            // userinfo: reactLocalStorage.getObject("user.info"),
-            // is_login: reactLocalStorage.getObject("home.is_login"),
-            // type: reactLocalStorage.get("type"),
+            modalChangePass:false,
+            userinfo: reactLocalStorage.getObject("user.info"),
+            is_login: reactLocalStorage.getObject("home.is_login"),
+            type: reactLocalStorage.get("type"),
             redirectManageClassOffer: false,
             listInvite: [],
             listShare: [],
@@ -40,6 +42,7 @@ class Nav extends Component {
         this.toggleSignin = this.toggleSignin.bind(this);
         this.toggleErr = this.toggleErr.bind(this);
         this.toggleInfoUser = this.toggleInfoUser.bind(this);
+        this.toggleChangePass = this.toggleChangePass.bind(this);
     }
     toggle() {
         this.setState(prevState => ({
@@ -61,6 +64,11 @@ class Nav extends Component {
             modalInfoUser: !prevState.modalInfoUser
         }))
         console.log(this.state.userinfo);
+    }
+    toggleChangePass(){
+        this.setState(prevState => ({
+            modalChangePass: !prevState.modalChangePass
+        }));
     }
     async componentDidMount() {
         if (this.state.type == "1") {
@@ -165,7 +173,7 @@ class Nav extends Component {
         if (result) {
             reactLocalStorage.setObject("user.info", null);
             reactLocalStorage.setObject("home.is_login", false);
-            reactLocalStorage.setObject("type", 0);
+            reactLocalStorage.set("type", 0);
             this.setState({
                 userinfo: null,
                 is_login: false,
@@ -183,6 +191,9 @@ class Nav extends Component {
     }
     handleNotify = async () =>{
         await MyService.postNotification()
+    }
+    handleChangePassword = () => {
+        this.toggleChangePass();
     }
     render() {
         var user_name = this.state.userinfo ? this.state.userinfo.userName : "";
@@ -270,7 +281,7 @@ class Nav extends Component {
                                                             <li className="dropdown-content-item"> <Link to="/manage-class-of-user"><label><i className="fas fa-plus-circle"></i>&nbsp;Danh sách lớp đã đăng</label></Link></li>
                                                         </div>}
                                                     <li className="dropdown-item-title">Chức năng cá nhân</li>
-                                                    <li className="dropdown-content-item"> <label><i className="fas fa-unlock-alt"></i>&nbsp;Đổi mật khẩu</label></li>
+                                                    <li className="dropdown-content-item"> <label onClick={this.handleChangePassword}><i className="fas fa-unlock-alt"></i>&nbsp;Đổi mật khẩu</label></li>
                                                     <li className="dropdown-content-item" onClick={this.handleLogout}> <label><i className="fas fa-sign-out-alt"></i>&nbsp;Đăng xuất</label></li>
                                                     <li className="dropdown-content-item" onClick={this.toggleInfoUser}> <label><i className="fas fa-unlock-alt"></i>&nbsp;Thông tin tài khoản</label></li>
                                                     <li className="dropdown-content-item" ><Link to="/manage-money"><label><i className="fas fa-dollar-sign"></i>&nbsp;Nạp tiền đổi điểm</label></Link></li>
@@ -331,6 +342,13 @@ class Nav extends Component {
 
                     <ModalBody>
                         <InfoUser toggleInfoUser={this.toggleInfoUser}/>
+                    </ModalBody>
+
+                </Modal>
+                <Modal isOpen={this.state.modalChangePass} toggle={this.toggleChangePass} className={this.props.className}>
+
+                    <ModalBody>
+                        <ChangePassword togglePass={this.toggleChangePass}/>
                     </ModalBody>
 
                 </Modal>

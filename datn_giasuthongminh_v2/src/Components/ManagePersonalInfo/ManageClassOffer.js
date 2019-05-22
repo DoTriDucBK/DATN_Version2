@@ -4,6 +4,7 @@ import ClassElement from '../ClassItem/ClassElement';
 import ClassElementTutor from '../ClassItem/ClassElementTutor';
 import { reactLocalStorage } from 'reactjs-localstorage';
 import ClassTutorAPI from '../../API/ClassTutorAPI';
+import TutorApi from '../../API/TutorAPI';
 class ManageClassOffer extends Component {
     constructor(props){
         super(props);
@@ -12,11 +13,16 @@ class ManageClassOffer extends Component {
             listClassTutor:[],
             status:0,
             classUser:[],
+            tutor:[]
         }
     }
     async componentDidMount(){
+        var tutor = await TutorApi.getTutorByName(reactLocalStorage.getObject("user.info").userName);
+        this.setState({
+            tutor:tutor.data
+        })
         var options = {
-            idTutor: this.state.idTutor
+            idTutor: tutor.data[0].idTutor
         }
         var listClassTutor = await ClassTutorAPI.getClassAndTutorByIdTutor(options);
         this.setState({
@@ -27,7 +33,7 @@ class ManageClassOffer extends Component {
         console.log(this.state);
         var options={
             status:parseInt(this.state.status),
-            idTutor: this.state.idTutor
+            idTutor: this.state.tutor[0].idTutor
         }
         var list = await ClassTutorAPI.getClassAndTutorByIdTutor(options).then(
             classUser => {
