@@ -82,13 +82,13 @@ const UserApi = {
         if (!params) return null;
         var user = reactLocalStorage.getObject("user.info", null);
         if (!user) return null;
-        var token = user ? user.user_acc_tokn : ""
+        var token = user ? user.token : ""
         var result = null;
         await MyService.putRequestData("/user/change-password", params, token)
             .then(data => result = data)
             .catch(err => console.log(err))
         if (result && result.data) {
-            console.log("user after change password",  result.data)
+            console.log("user after change password", result.data)
             reactLocalStorage.setObject("user.info", result.data)
         }
         return result

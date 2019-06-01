@@ -141,7 +141,7 @@ class ManageMoney extends Component {
                                             <div className="info-online-give-money">
                                                 <p className="online-give-money-2">Số tiền: <b>50000</b></p>
                                             </div>
-                                            <div className="info-online-give-money">
+                                            <div className="info-online-give-money money1">
                                                 <p className="online-give-money-2">Nội dung chuyển tiền: <b>Nạp tiền đổi điểm ID = 1</b></p>
                                             </div>
                                         </div> : <div></div>}

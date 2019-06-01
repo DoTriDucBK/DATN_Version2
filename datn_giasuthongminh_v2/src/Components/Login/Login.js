@@ -102,9 +102,9 @@ class Login extends Component {
                 </div>
                 <div className="login-username">
                     <div className="login-username-title">
-                        <p className="login-username">Username</p>
+                        <p className="login-username">Email</p>
                     </div>
-                    <input type="text" placeholder="Tên đăng nhập"
+                    <input type="text" placeholder="Nhập email"
                         value={this.state.emailInput.value}
                         onChange={this.onChangeUsername}>
                     </input>

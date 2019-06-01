@@ -138,10 +138,9 @@ class Nav extends Component {
     handleLogin = (userinfo, is_login, type) => {
         this.setState({ userinfo: userinfo, is_login: is_login, type: type })
     }
-    // Bắt sự kiện cho button search
-    // searchTutor = (e) => {
-    //     e.preventDefault();
-    // }
+    handleChangePass = (userinfo, is_login, type) => {
+        this.setState({ userinfo: userinfo, is_login: is_login, type: type })
+    }
     // Điều hướng trang Home
     redirectHome = () => {
         this.setState({
@@ -180,10 +179,6 @@ class Nav extends Component {
                 type: 0
             })
         } else console.log("Lỗi kết nối mạng")
-        // reactLocalStorage.set("home.is_login", true);
-        // this.setState({
-        //     redirectHome: true, 
-        // })
     }
     calNumberShare = (a, b) => {
         console.log(this.state.listShare.length)
@@ -207,10 +202,6 @@ class Nav extends Component {
         } else if (this.state.redirectManageClassOffer) {
             return <Redirect push to="/manage-offer" />
         }
-        // else if(this.state.redirectSearchTutor){
-        //     var textSearch = this.state.textSearch;
-        //     return <Redirect  to={"/searchTutor/" + textSearch + ""}/>
-        // }
         console.log(this.state.is_login)
         return (
             <div>
@@ -218,7 +209,6 @@ class Nav extends Component {
                     <a className="navbar-brand brand-custom" href="#">
                         <div 
                             className="d-inline-block align-top image-logo" alt="" />
-                        {/* <label className="nameLogo">Gia sư BK</label> */}
                     </a>
                     <div className="collapse navbar-collapse navbar-collapse-custom" id="navbarSupportedContent">
                         <form className="form-inline my-2 my-lg-0 search form-search">
@@ -227,10 +217,8 @@ class Nav extends Component {
                                 onChange={this.handleSearchChange}
                             />
                             <div className="nav-btn-search" >
-                                {/* <i className="fas fa-search"></i> */}
                                 {this.state.redirectSearchTutor ? <Link to={"/searchTutor/" + this.state.textSearch} className="nav-link custom-link">Tìm kiếm</Link> : <div className="notChange" onClick={this.toggleErr}>Tìm kiếm</div>}
                             </div>
-                            {/*   onClick={this.redirectSearchTutor} className="nav-link" */}
                         </form>
                         <ul className="navbar-nav mr-4 ul-nav ul-custom">
                             <li className="nav-item">
@@ -279,6 +267,7 @@ class Nav extends Component {
                                                             <li className="dropdown-item-title">Chức năng học viên</li>
                                                             <li className="dropdown-content-item"> <Link to="/manage-invitation"><label><i className="fas fa-tasks"></i>&nbsp;&nbsp;Quản lý các yêu cầu gia sư</label></Link></li>
                                                             <li className="dropdown-content-item"> <Link to="/manage-class-of-user"><label><i className="fas fa-plus-circle"></i>&nbsp;Danh sách lớp đã đăng</label></Link></li>
+                                                            <li className="dropdown-content-item"> <Link to="/change-info-user"><label><i className="fas fa-tools"></i>&nbsp;&nbsp;Cập nhật thông tin cá nhân</label></Link></li>
                                                         </div>}
                                                     <li className="dropdown-item-title">Chức năng cá nhân</li>
                                                     <li className="dropdown-content-item"> <label onClick={this.handleChangePassword}><i className="fas fa-unlock-alt"></i>&nbsp;Đổi mật khẩu</label></li>
@@ -313,6 +302,16 @@ class Nav extends Component {
                                     <li className="dropdown-content-item-small"><Link to="/"> <label><i className="fas fa-school"></i>&nbsp;&nbsp;Trang chủ</label></Link></li>
                                     <li className="dropdown-content-item-small"><Link to="/listclass"><label><i className="fas fa-graduation-cap"></i>&nbsp;Danh sách lớp học</label></Link></li>
                                     <li className="dropdown-content-item-small" onClick={this.toggle}> <Link to=""><label><i className="fas fa-user-shield"></i>&nbsp;&nbsp;Đăng nhập</label></Link></li>
+                                    {reactLocalStorage.get("type") =="1"?
+                                            <li className="dropdown-content-item-small"><Link to="/manage-invite"><label><i className="fas fa-graduation-cap"></i>&nbsp;Lời mời</label></Link></li>:
+                                            <li className="dropdown-content-item-small"><Link to="/manage-offer"><label><i className="fas fa-graduation-cap"></i>&nbsp;Lời mời</label></Link></li>
+                                }
+                                 {reactLocalStorage.get("type") == "2"?  <li className="dropdown-content-item-small"><Link to="/manage-class-of-user"><label><i className="fas fa-graduation-cap"></i>&nbsp;Danh sách lớp đã đăng</label></Link></li>:<div></div>}
+                                    {reactLocalStorage.get("type") == "1" ?
+                                     <li className="dropdown-content-item-small"><Link to="/personal"><label><i className="fas fa-graduation-cap"></i>&nbsp;Trang cá nhân</label></Link></li>:
+                                     <li className="dropdown-content-item-small"><Link to="/change-info-user"><label><i className="fas fa-graduation-cap"></i>&nbsp;Trang cá nhân</label></Link></li>}
+                                    <li className="dropdown-content-item-small"><label onClick={this.handleChangePassword}><i className="fas fa-unlock-alt"></i>&nbsp;&nbsp;Đổi mật khẩu</label></li>
+                                    <li className="dropdown-content-item-small"><label onClick={this.handleLogout}><i className="fas fa-sign-out-alt"></i>&nbsp;&nbsp;Đăng xuất</label></li>
                                     </ul>
                             </div>
                         </div>
@@ -348,7 +347,7 @@ class Nav extends Component {
                 <Modal isOpen={this.state.modalChangePass} toggle={this.toggleChangePass} className={this.props.className}>
 
                     <ModalBody>
-                        <ChangePassword togglePass={this.toggleChangePass}/>
+                        <ChangePassword togglePass={this.toggleChangePass} handleChangePass={this.handleChangePass}/>
                     </ModalBody>
 
                 </Modal>
