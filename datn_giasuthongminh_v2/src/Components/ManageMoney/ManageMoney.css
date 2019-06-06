@@ -84,7 +84,7 @@ div.title-give-money-right{
 }
 div.value-give-money{
     width: 95%;
-    height: 400px;
+    height: 440px;
     max-height: 700px;
     margin: auto;
     margin-top:10px;
@@ -196,7 +196,7 @@ div.radio1{
 }
 div.online-give-money{
     width: 100%;
-    height: 260px;
+    height: 300px;
     background-color: #F3F3F3;
     overflow: auto;
 }
@@ -308,7 +308,7 @@ div.dialog-userName{
 @media only screen and (max-width:425px){
     div.manage-money-container{
         width: 100%;
-        height: 1000px;
+        height: 1020px;
         margin: auto;
         padding-top: 70px;
         background-color: white;
@@ -347,7 +347,7 @@ div.dialog-userName{
     }
     div.value-give-money{
         width: 95%;
-        height: 600px;
+        height: 640px;
         max-height: 800px;
         margin: auto;
         margin-top:10px;
@@ -405,7 +405,7 @@ div.dialog-userName{
     }
     div.online-give-money{
         width: 100%;
-        height: 360px;
+        height: 400px;
         background-color: #F3F3F3;
         overflow: auto;
     }
@@ -484,7 +484,7 @@ div.dialog-userName{
     }
     div.value-give-money{
         width: 95%;
-        height: 550px;
+        height: 620px;
         max-height: 800px;
         margin: auto;
         margin-top:10px;
@@ -538,7 +538,7 @@ div.dialog-userName{
     }
     div.online-give-money{
         width: 100%;
-        height: 300px;
+        height: 380px;
     }
     div.online-give-money-1{
         width: 100%;

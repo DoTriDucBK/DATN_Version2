@@ -6,6 +6,7 @@ import ClassInfoAPI from '../../API/ClassInfoAPI';
 import ClassUserAPI from '../../API/ClassUserAPI';
 import { reactLocalStorage } from "reactjs-localstorage";
 import ClassUserApi from '../../API/ClassUserAPI';
+import 'bootstrap/dist/css/bootstrap.min.css';
 class ManageInvitation extends Component {
     constructor(props){
         super(props);
@@ -13,16 +14,15 @@ class ManageInvitation extends Component {
             idUser:reactLocalStorage.getObject("user.info").idUser,
             idTutor:0,
             classTutor:[],
-            classUser:[],
-            status:0
+            status:0,
+            activePage: 1,
+            classPerPage: 3,
         }
     }
     async componentDidMount(){
             let value = await ClassUserAPI.getClassAndTutor(this.state.idUser);
             this.setState({
-                classTutor: value.data,
-                // idUser:parseInt(this.props.location.state.id_User),
-            // idTutor:parseInt(this.props.location.state.idTutor)
+                classTutor: value.data
             });
             console.log(this.state)
     }
@@ -40,17 +40,17 @@ class ManageInvitation extends Component {
             classUser => {
                 if(classUser && classUser.code === "success"){
                     list = classUser.data
-                    this.setState({ classUser:classUser.data})
+                    this.setState({ classTutor:classUser.data})
                 }else if(classUser && classUser.code ==="error"){
                     alert(classUser.message)
                 }
             }
         ).catch(err => console.log(err)
         )
+        console.log(list)
     }
     showClassInfo = () => {
-        if(this.state.classUser.length === 0 && this.state.classTutor.length > 0){
-        const classTutor = this.state.classTutor.map((item, index) =>
+            const classTutor = this.state.classTutor.map((item, index) =>
             <div className="result-element-class" key={index}>
                 <ClassItem_Tutor description={item.classInfo[0].description}
                     detailClass={item.classInfo[0].detailClass}
@@ -63,29 +63,12 @@ class ManageInvitation extends Component {
                     birthdayTutor={item.tutor[0].birthdayTutor}
                     telTutor={item.tutor[0].telTutor}
                     emailTutor={item.tutor[0].emailTutor} 
-                    status = {item.classInfo[0].status}/>
-            </div>
-        ); 
-        return classTutor;}
-        else {
-            const classTutor = this.state.classUser.map((item, index) =>
-            <div className="result-element-class" key={index}>
-                <ClassItem_Tutor description={item.classInfo[0].description}
-                    detailClass={item.classInfo[0].detailClass}
-                    nameSubject={item.classInfo[0].nameSubject}
-                    city={item.classInfo[0].nameCity}
-                    typeMethod={item.classInfo[0].typeMethod}
-                    numberDay={item.classInfo[0].numberDay}
-                    fee={item.classInfo[0].fee}
-                    nameTutor={item.tutor[0].nameTutor}
-                    birthdayTutor={item.tutor[0].birthdayTutor}
-                    telTutor={item.tutor[0].telTutor}
-                    emailTutor={item.tutor[0].emailTutor} 
-                    status = {item.classInfo[0].status}/>
+                    status = {item.classInfo[0].status}
+                    idClassUser = {item.idClass_User}
+                    idClass={item.classInfo[0].idClass}/>
             </div>
             );
             return classTutor;
-        }
 
     }
     handleChangeSearch = (e) => {
@@ -111,7 +94,7 @@ class ManageInvitation extends Component {
                             <option value="2">Đang tìm gia sư</option>
                             <option value="1">Đã chấp nhận</option>
                         </select>
-                        <button className="manage-btnClass" onClick={this.searchClass}> &nbsp;Áp dụng</button>
+                        <button className="manage-btnClass"> &nbsp;Áp dụng</button>
                     </div>
 
                 </div>

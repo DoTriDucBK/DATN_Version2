@@ -16,6 +16,7 @@ import '../css/ModalCustome.css';
 import DetailClass from '../../Components/DetailClass/DetailClass'
 import VoteTutor from '../VoteTutor/VoteTutor';
 import ClassInfoApi from '../../API/ClassInfoAPI';
+import DetailClassUser from '../../Components/DetailClass/DetailClassUser';
 class ClassItemOfUser extends Component {
     constructor(props){
         super(props);
@@ -32,13 +33,20 @@ class ClassItemOfUser extends Component {
             idClass_User:0,
             oldStar:0,
             timesVote:0,
-            comment:""
+            comment:"",
+            modalDetailClass:false,
         }
         this.toggle = this.toggle.bind(this);
+        this.toggleDetailClass = this.toggleDetailClass.bind(this);
     }
     toggle() {
         this.setState(prevState => ({
             modal: !prevState.modal
+        }));
+    }
+    toggleDetailClass() {
+        this.setState(prevState => ({
+            modalDetailClass: !prevState.modalDetailClass
         }));
     }
     async componentDidMount(){
@@ -95,20 +103,33 @@ class ClassItemOfUser extends Component {
                 </div>
                 <div className="class-fee">
                     <div className="value-fee"><b className="value-fee">{MyUtils.currencyFormat(this.props.fee)}đ</b></div>
-                    <div className="view-detail"><p className="view-detail"  onClick={this.toggle}><u><i>Xem chi tiết lớp</i></u></p></div>
+                    <div className="view-detail"><p className="view-detail"  onClick = {this.toggleDetailClass}><u><i>Xem chi tiết lớp</i></u></p></div>
                 </div>
                 {this.props.status==="Đã nhận lớp" ?
                 <div className="class-offer">
                     <div className="button-offer">
-                        <button className="button-vote-tutor" onClick={this.searchTutor}>Đánh giá gia sư</button>
+                        {this.props.comment === null?
+                        <button className="button-vote-tutor" onClick={this.searchTutor}>Đánh giá gia sư</button>:
+                        <div className="status-class-custom"><label className="status-class-custom">{this.props.status}</label></div>}
                     </div>
                 </div>
                 :<div className="class-offer">
+                    {this.props.status === "Đang yêu cầu"?
+                    <div className="status-class-custom2">
+                        <label className="status-class-custom">{this.props.status}</label>
+                    </div>:<div className="status-class-custom3"><label className="status-class-custom">{this.props.status}</label></div>}
                 </div>}
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
 
                     <ModalBody>
                         <VoteTutor idClass_User = {this.state.idClass_User} oldStar={this.state.oldStar} timesVote = {this.state.timesVote} nameTutor={this.state.nameTutor} idTutor={this.state.idTutor} toggle={this.toggle} idClass={this.state.idClass} idUser={this.state.idUser} status={this.state.status}/>
+                    </ModalBody>
+
+                </Modal>
+                <Modal isOpen={this.state.modalDetailClass} toggle={this.toggleDetailClass} className={this.props.className}>
+
+                    <ModalBody>
+                        <DetailClassUser idClass={this.props.idClass} idUserOfClass = {this.props.idUser} toggleDetail = {this.toggleDetailClass}/>
                     </ModalBody>
 
                 </Modal>

@@ -51,7 +51,7 @@ class ListClass extends Component {
     async componentDidMount() {
         let value = await ClassInfoAPI.getAll();
         this.setState({
-            classInfo: value.data
+            classInfo: value.data.sort((a,b)=>b.idClass - a.idClass)
         });
         console.log(this.state)
     }
@@ -278,13 +278,14 @@ class ListClass extends Component {
                     <div>
                      {renderTodos}
                     </div>
+                    {pageNumbers.length > 1?
                     <div className="rank-page">
                         <div className="page-number">
                             <div className="item-page" onClick={this.handlePageChangePre}><label ><i className="fas fa-angle-left"></i></label></div>
                             {renderPageNumbers}
                             <div className="item-page"><label onClick={this.handlePageChangeNext}><i className="fas fa-angle-right"></i></label></div>
                         </div>
-                    </div>
+                    </div>:<div></div>}
                 </div>
                 
             </div>

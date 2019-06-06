@@ -248,13 +248,6 @@ class SearchListTutor extends Component {
                             <option value="1">Offline (Tại nhà)</option>
                             <option value="2">Cả 2 hình thức</option>
                         </select>
-                        {/* <select required="" className="select-search" name="fee" onChange={this.handleChangeInputTextForm}>
-                            <option value="" className="opt-search">&nbsp;--Học phí 1 buổi--</option>
-                            <option value="1">Dưới 100.000</option>
-                            <option value="2">Từ 100.000 đến 200.000</option>
-                            <option value="3">Từ 200.000 đến 300.000</option>
-                            <option value="4">Trên 300.000</option>
-                        </select> */}
                         <select required="" className="select-search" name="jobTutor" onChange={this.handleChangeInputTextForm}>
                             <option value="" className="opt-search">&nbsp;&nbsp;&nbsp;--Nghề nghiệp--</option>
                             <option value="Sinh viên">Sinh viên</option>
@@ -271,13 +264,14 @@ class SearchListTutor extends Component {
                     <div className="row">
                         {renderTodos}
                     </div>
+                    {pageNumbers.length > 1?
                     <div className="rank-page">
                         <div className="page-number">
                             <div className="item-page" onClick={this.handlePageChangePre}><label ><i className="fas fa-angle-left"></i></label></div>
                             {renderPageNumbers}
                             <div className="item-page"><label onClick={this.handlePageChangeNext}><i className="fas fa-angle-right"></i></label></div>
                         </div>
-                    </div>
+                    </div>:<div></div>}
 
                 </div>
             </div>

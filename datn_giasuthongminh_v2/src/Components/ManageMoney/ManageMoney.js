@@ -142,7 +142,10 @@ class ManageMoney extends Component {
                                                 <p className="online-give-money-2">Số tiền: <b>50000</b></p>
                                             </div>
                                             <div className="info-online-give-money money1">
-                                                <p className="online-give-money-2">Nội dung chuyển tiền: <b>Nạp tiền đổi điểm ID = 1</b></p>
+                                                <p className="online-give-money-2">Nội dung chuyển tiền: <b>Nạp tiền đổi điểm ID = {this.state.user[0].idUser}</b></p>
+                                            </div>
+                                            <div className="note-give-money">
+                                                <p className="online-give-money">Sau khi chuyển khoản thành công, vui lòng chụp ảnh và gửi mail cho trung tâm tại hòm thư:  <b>dotriduc26071996@gmail.com</b></p>
                                             </div>
                                         </div> : <div></div>}
                                     <div className="radio1">
